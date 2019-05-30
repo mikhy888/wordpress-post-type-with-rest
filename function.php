@@ -46,3 +46,18 @@ $args = array(
 register_post_type( 'result', $args );
 }
   add_action( 'init', 'codex_result_init' );
+
+
+
+
+
+
+
+// fullwidth editor
+
+function custom_admin_css() {
+echo '<style type="text/css">
+.wp-block { max-width: 100%; }
+</style>';
+}
+add_action('admin_head', 'custom_admin_css');
