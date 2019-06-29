@@ -1,3 +1,5 @@
+//adding single post tyle with rest support
+
 function codex_result_init() {
 $labels = array(
     'name'               => _x( 'Result', 'post type general name', 'your-plugin-textdomain' ),
@@ -50,10 +52,7 @@ register_post_type( 'result', $args );
 
 
 
-
-
-
-// fullwidth editor
+// making wordpress editor screen full width
 
 function custom_admin_css() {
 echo '<style type="text/css">
@@ -61,3 +60,55 @@ echo '<style type="text/css">
 </style>';
 }
 add_action('admin_head', 'custom_admin_css');
+
+
+
+
+// HIDING DEFAULT EDITOR FROM THE PAGE
+
+function reset_editor()
+{
+     global $_wp_post_type_features;
+
+     $post_type="page";
+     $feature = "editor";
+     if ( !isset($_wp_post_type_features[$post_type]) )
+     {
+
+     }
+     elseif ( isset($_wp_post_type_features[$post_type][$feature]) )
+     unset($_wp_post_type_features[$post_type][$feature]);
+}
+
+add_action("init","reset_editor");
+
+
+
+
+//ACF fetching post - details - as loop
+<?php 
+		$posts = get_posts(array(
+			'posts_per_page'	=> -1,
+			'post_type'			=> 'news'  //post name
+		));
+		if( $posts ): ?>
+			<ul class="home-news">
+			<?php foreach( $posts as $post ): 
+				setup_postdata( $post );
+				?>
+				<li>
+					<a href="<?php the_permalink(); ?>">
+						<img src="<?php echo the_field('news_image'); ?>" alt="">
+						<div class="inner-bottom">
+							<div class="date"><?php the_field('news_date'); ?></div>
+							<div class="text"><?php the_field('news_title'); ?></div>
+						</div>
+					</a>
+				</li>
+			<?php endforeach; ?>
+			</ul>
+			<?php wp_reset_postdata(); ?>
+		<?php endif; ?>
+
+
+
