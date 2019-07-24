@@ -118,3 +118,32 @@ Removing p tag from wp contact form 7
 add_filter( 'wpcf7_autop_or_not', '__return_false' );
 //Goes to wp-config.php file
 */
+
+
+
+
+
+
+// adding multiple post type
+function codex_custom_init() {
+
+  register_post_type(
+    'testimonials', array(
+      'labels' => array('name' => __( 'Books' ), 'singular_name' => __( 'Book' ) ),
+      'public' => true,
+      'has_archive' => true,
+      'supports' => array('title', 'editor', 'thumbnail')
+    )
+  );
+
+  register_post_type(
+    'home-messages', array(
+      'labels' => array('name' => __( 'Cars' ), 'singular_name' => __( 'Car' ) ),
+      'public' => true,
+      'has_archive' => true,
+      'supports' => array('title', 'editor', 'thumbnail')
+    )
+  );
+
+}
+add_action( 'init', 'codex_custom_init' );
