@@ -147,3 +147,16 @@ function codex_custom_init() {
 
 }
 add_action( 'init', 'codex_custom_init' );
+
+
+
+
+//adding trim, truncate
+<?php echo $excerpt = wp_trim_words( get_field('service_detail_content' ), $num_words = 50, $more = '...' ); ?>
+
+
+
+
+
+
+
