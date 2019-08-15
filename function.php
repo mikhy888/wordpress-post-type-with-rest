@@ -159,4 +159,35 @@ add_action( 'init', 'codex_custom_init' );
 
 
 
+//registration random posts - in function.php
+function wpb_rand_posts() {  
+$args = array(
+    'post_type' => 'services',
+    'orderby'   => 'rand',
+    'posts_per_page' => 5, 
+    );
+$the_query = new WP_Query( $args );
+if ( $the_query->have_posts() ) {
+$string .= '<ul>';
+    while ( $the_query->have_posts() ) {
+        $the_query->the_post();
+        $string .= '<li>hehehe<a href="'. get_permalink() .'"><h2>'.get_the_post_thumbnail().'</h2>text</a></li>';
+       //$string .= '<li><a href="'. get_permalink() .'"><img src='.the_field('service_title').'></a></li>';
+    }
+    $string .= '</ul>';
+    /* Restore original Post Data */
+    wp_reset_postdata();
+} else {
+$string .= 'no posts found';
+}
+return $string; 
+} 
+add_shortcode('wpb-random-posts-services','wpb_rand_posts');
+add_filter('widget_text', 'do_shortcode'); 
+
+
+
+
+
+
 
