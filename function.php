@@ -186,6 +186,22 @@ add_shortcode('wpb-random-posts-services','wpb_rand_posts');
 add_filter('widget_text', 'do_shortcode'); 
 
 
+//disable edit and trash
+add_filter( 'page_row_actions', 'remove_row_actions', 10, 1 );
+function remove_row_actions( $actions )
+{
+    if( get_post_type() === 'page' )
+        //unset( $actions['edit'] );
+        //unset( $actions['view'] );
+        unset( $actions['trash'] );
+        unset( $actions['inline hide-if-no-js'] );
+    return $actions;
+}
+
+
+
+
+
 
 
 
