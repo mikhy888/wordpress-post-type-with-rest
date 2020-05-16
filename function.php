@@ -199,6 +199,21 @@ function remove_row_actions( $actions )
 }
 
 
+//resistering single category for CPT
+  function tr_create_my_taxonomy() {
+    register_taxonomy(
+        'team-category',
+        'team',
+        array(
+            'label' => __( 'Category' ),
+            'rewrite' => array( 'slug' => 'team-category' ),
+            'hierarchical' => true,
+        )
+    );
+}
+add_action( 'init', 'tr_create_my_taxonomy' );
+
+
 
 
 
