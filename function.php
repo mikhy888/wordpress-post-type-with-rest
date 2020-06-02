@@ -215,6 +215,11 @@ add_action( 'init', 'tr_create_my_taxonomy' );
 
 
 
+//load faster with acf
+define('WP_POST_REVISIONS', false );
+
+
+
 
 
 
