@@ -234,6 +234,24 @@ function mindbase_create_acf_pages() {
 add_action( 'init', 'mindbase_create_acf_pages' );
 
 
+// Custom menu registration
+function wpb_custom_new_menu() {
+  register_nav_menu('my-custom-menu',__( 'My Custom Menu' ));
+}
+add_action( 'init', 'wpb_custom_new_menu' );
+// custom menu display
+<?php
+wp_nav_menu( array( 
+    'theme_location' => 'my-custom-menu', 
+    'container_class' => 'custom-menu-class' ) ); 
+?>
+
+
+
+
+
+
+
 
 
 
