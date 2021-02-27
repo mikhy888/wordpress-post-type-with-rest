@@ -247,6 +247,34 @@ wp_nav_menu( array(
 ?>
 
 
+// get all the category name
+$args = array(
+'type'                     => 'portfolio',
+'child_of'                 => 0,
+'parent'                   => '',
+'orderby'                  => 'name',
+'order'                    => 'ASC',
+'hide_empty'               => 1,
+'hierarchical'             => 1,
+'taxonomy'                 => 'portfolio_category',
+'pad_counts'               => false );
+$categories = get_categories($args);
+echo '<div align="center">';
+
+foreach ($categories as $category) {
+ $url = get_term_link($category);?>
+  <button class="filter-button" data-filter="<?php echo strtolower(str_replace(" ","-", $category->name)); ?>"><?php echo $category->name; ?></button>
+ <?php
+}
+echo '</div>
+
+
+//get category name assiciated with post type
+$terms = get_the_terms( $post->ID , 'portfolio_category' );
+foreach ( $terms as $term ) {
+	echo $term->name;
+}
+
 
 
 
