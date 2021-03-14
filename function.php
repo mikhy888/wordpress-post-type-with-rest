@@ -263,10 +263,10 @@ wp_nav_menu( array(
 // list all category and subcategory
 <?php
 $args = array(
-'type'                     => 'portfolio',
+'type'                     => 'portfolio', // enter post type name
 'parent'                   => 0,
 'hide_empty'               => false,
-'taxonomy'                 => 'portfolio_category',
+'taxonomy'                 => 'portfolio_category', // enter taxonomy name of custom post type
 );
 $categories = get_categories($args);
 echo '<div align="center" class="home-filter-container">';
