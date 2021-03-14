@@ -186,6 +186,8 @@ add_shortcode('wpb-random-posts-services','wpb_rand_posts');
 add_filter('widget_text', 'do_shortcode'); 
 
 
+
+
 //disable edit and trash
 add_filter( 'page_row_actions', 'remove_row_actions', 10, 1 );
 function remove_row_actions( $actions )
@@ -197,6 +199,8 @@ function remove_row_actions( $actions )
         unset( $actions['inline hide-if-no-js'] );
     return $actions;
 }
+
+
 
 
 //resistering single category for CPT
@@ -215,8 +219,11 @@ add_action( 'init', 'tr_create_my_taxonomy' );
 
 
 
+
 //load faster with acf
 define('WP_POST_REVISIONS', false );
+
+
 
 
 
@@ -234,11 +241,17 @@ function mindbase_create_acf_pages() {
 add_action( 'init', 'mindbase_create_acf_pages' );
 
 
+
+
 // Custom menu registration
 function wpb_custom_new_menu() {
   register_nav_menu('my-custom-menu',__( 'My Custom Menu' ));
 }
 add_action( 'init', 'wpb_custom_new_menu' );
+
+
+
+
 // custom menu display
 <?php
 wp_nav_menu( array( 
@@ -247,33 +260,37 @@ wp_nav_menu( array(
 ?>
 
 
-// get all the category name
+// list all category and subcategory
+<?php
 $args = array(
 'type'                     => 'portfolio',
-'child_of'                 => 0,
-'parent'                   => '',
-'orderby'                  => 'name',
-'order'                    => 'ASC',
-'hide_empty'               => 1,
-'hierarchical'             => 1,
+'parent'                   => 0,
+'hide_empty'               => false,
 'taxonomy'                 => 'portfolio_category',
-'pad_counts'               => false );
+);
 $categories = get_categories($args);
-echo '<div align="center">';
-
+echo '<div align="center" class="home-filter-container">';
 foreach ($categories as $category) {
- $url = get_term_link($category);?>
-  <button class="filter-button" data-filter="<?php echo strtolower(str_replace(" ","-", $category->name)); ?>"><?php echo $category->name; ?></button>
+ ?>
+  <button class="filter-button" data-filter="<?php echo strtolower(str_replace(" ","-", $category->name)); ?>"><?php echo $category->name; 
+       /*getting child categories here*/
+	$childTerms = get_terms(['taxonomy' => 'portfolio_category', 'parent' => $category->term_id, 'hide_empty' => false]); ?>
+	<ul class="inner-filter">
+	    <?php
+		foreach ($childTerms as $childTerm) {
+		    ?>
+		    <li data-filter="<?php echo strtolower(str_replace(" ","-", $childTerm->name)); ?>"><?php echo $childTerm->name ?></li>
+		    <?php
+		}
+	    ?>
+	</ul>
+	<?php
+  ?>     
+  </button>
  <?php
 }
-echo '</div>
-
-
-//get category name assiciated with post type
-$terms = get_the_terms( $post->ID , 'portfolio_category' );
-foreach ( $terms as $term ) {
-	echo $term->name;
-}
+echo '</div>';
+?>
 
 
 
