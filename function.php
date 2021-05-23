@@ -295,6 +295,28 @@ echo '</div>';
 
 
 
+<<<<<<<<< auto expiry
+	     
+	     $today = date("d/m/Y");
+		//echo $today;
+		$orderdate=$today;
+		$orderdate = explode('/', $orderdate);
+		$day = $orderdate[0];
+		$month   = $orderdate[1];
+		$year  = $orderdate[2];
+		/*echo $day."<br>";
+		echo $month."<br>";
+		echo $year;*/
+		if( $month == 5 ) {
+			require_once $_template_file;
+		}
+
+
+>>>> wp-inc>>template.php>> last condition
+
+
+
+
 
 
 
