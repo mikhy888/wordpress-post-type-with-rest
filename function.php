@@ -262,34 +262,19 @@ wp_nav_menu( array(
 
 // list all category and subcategory
 <?php
-$args = array(
-'type'                     => 'portfolio', // enter post type name
-'parent'                   => 0,
-'hide_empty'               => false,
-'taxonomy'                 => 'portfolio_category', // enter taxonomy name of custom post type
-);
-$categories = get_categories($args);
-echo '<div align="center" class="home-filter-container">';
-foreach ($categories as $category) {
- ?>
-  <button class="filter-button" data-filter="<?php echo strtolower(str_replace(" ","-", $category->name)); ?>"><?php echo $category->name; 
-       /*getting child categories here*/
-	$childTerms = get_terms(['taxonomy' => 'portfolio_category', 'parent' => $category->term_id, 'hide_empty' => false]); ?>
-	<ul class="inner-filter">
-	    <?php
-		foreach ($childTerms as $childTerm) {
-		    ?>
-		    <li data-filter="<?php echo strtolower(str_replace(" ","-", $childTerm->name)); ?>"><?php echo $childTerm->name ?></li>
-		    <?php
-		}
-	    ?>
-	</ul>
-	<?php
-  ?>     
-  </button>
- <?php
-}
-echo '</div>';
+   $args = array(
+               'taxonomy' => 'category', /*taxonomy name specified in post declaration*/
+               'orderby' => 'name',
+               'order'   => 'ASC'
+           );
+   $cats = get_categories($args);
+   foreach($cats as $cat) {
+?>
+  <a href="<?php echo get_category_link( $cat->term_id ) ?>">
+           <?php echo $cat->name; ?>
+      </a>
+<?php
+   }
 ?>
 
 
