@@ -1,10 +1,11 @@
 js>>>>>>>>>>>>>>>>>>>>>>>>>>
 /* fetching data from api */
-/* val is category id  */
 function catFilter(val) {
 	
-	const api_url = "http://localhost/[sitename]/wp-json/wp/v2/products/?categories="+val+"&_embed";
+         // adding rest api path
+	const api_url = "http://localhost/[sitename]/wp-json/wp/v2/[posttype_name]/?categories="+val+"&_embed";
 	
+	// function to get the data from api
 	async function getapi(url) {
 		const response = await fetch(url);
 		var data = await response.json();
@@ -15,24 +16,43 @@ function catFilter(val) {
 		show(data);
 	}
 	
+         // api call functio calling
 	getapi(api_url);
- 
-  /*preloader hiding on load of items*/
+	
+        // managing preloader
 	function hideloader() {
 		document.getElementById('loading').style.display = 'none';
 	}
 	
+	// function to show the date into html
 	function show(data) {
-		for (let r of data) {
-			tab = `<div> 
-    <div>${r.title.rendered} </div>
-    <div><img src='${r._embedded['wp:featuredmedia']['0'].media_details.sizes.full.source_url}' alt='${r.slug}'></div>
-    <div>${r.slug}</div>      
-		</div>`;
+		document.getElementById("results").innerHTML = "";
+		for (let i = 0; i < data.length; i++) {
+			title = data[i].title.rendered;
+			thumb = data[i]._embedded['wp:featuredmedia']['0'].media_details.sizes.full.source_url;
+			link = data[i].link;
+			
+			tab = `<a href='${data[i].link}'>
+			<div class='thumb-inner'><img src='${data[i]._embedded['wp:featuredmedia']['0'].media_details.sizes.full.source_url}' alt='${data[i].title.rendered}'></div>
+			<div class='title-inner'>${data[i].title.rendered}</div>
+			</a>`;
+			document.getElementById("results").innerHTML += tab;
 		}
-		document.getElementById("results").innerHTML = tab;
-	}
+  }
+
 }
+
+// managing tabbed category filter in frontend - fetching category id
+$(".cat-selector").on("click",function(){
+	//calling function for fetching data from api
+	var attVal = $(this).attr("data-value");
+	catFilter(attVal);
+
+	$(".cat-selector").removeClass("active");
+	$(this).addClass("active");
+});
+
+
 
 
 /* PHP >>  fetching all the category names and ids */
