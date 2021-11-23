@@ -296,8 +296,17 @@ wp_nav_menu( array(
 			require_once $_template_file;
 		}
 
-
 >>>> wp-inc>>template.php>> last condition
+	
+//adding google map iframe from textarea - acf
+	<div class="map-wrapper">
+   <?php 
+    $iframe_string = get_field("google_map"); 
+    preg_match('/src="([^"]+)"/', $iframe_string, $match);
+    $url = $match[1];
+   ?>
+   <iframe src="<?php echo $url ?>" frameborder="0" width="100%" height="340px"></iframe>
+ </div>
 
 
 
