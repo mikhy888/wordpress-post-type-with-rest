@@ -307,6 +307,17 @@ wp_nav_menu( array(
    ?>
    <iframe src="<?php echo $url ?>" frameborder="0" width="100%" height="340px"></iframe>
  </div>
+	
+	
+	
+// Calling menu from menu name
+	<?php
+	wp_nav_menu(
+		array(
+			'menu' => 'Header Menu'
+		)
+	);
+	?>
 
 
 
