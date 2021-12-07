@@ -320,7 +320,11 @@ wp_nav_menu( array(
 	?>
 
 
-
+// youtube video id
+$v_link = get_sub_field('video_url');
+$video_id = explode("?v=", $v_link);
+$video_id = $video_id[1];
+	
 
 
 
