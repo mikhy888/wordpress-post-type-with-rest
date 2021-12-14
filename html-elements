@@ -1,12 +1,11 @@
 /* soimple hamburget menu */
 
 <div class="hamburger" id="hamburger-1">
-          <span class="line"></span>
-          <span class="line"></span>
-          <span class="line"></span>
-        </div>
-     
-     
+<span class="line"></span>
+<span class="line"></span>
+<span class="line"></span>
+</div>
+    
   //css
   .hamburger .line{
   width: 50px;
@@ -18,35 +17,70 @@
   -o-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
 }
-
 .hamburger:hover{
   cursor: pointer;
 }
 #hamburger-1.is-active .line:nth-child(2){
   opacity: 0;
 }
-
 #hamburger-1.is-active .line:nth-child(1){
   -webkit-transform: translateY(13px) rotate(45deg);
   -ms-transform: translateY(13px) rotate(45deg);
   -o-transform: translateY(13px) rotate(45deg);
   transform: translateY(13px) rotate(45deg);
 }
-
 #hamburger-1.is-active .line:nth-child(3){
   -webkit-transform: translateY(-13px) rotate(-45deg);
   -ms-transform: translateY(-13px) rotate(-45deg);
   -o-transform: translateY(-13px) rotate(-45deg);
   transform: translateY(-13px) rotate(-45deg);
-}
- 
-        
+}       
+
 $(document).ready(function(){
   $(".hamburger").click(function(){
     $(this).toggleClass("is-active");
   });
 });
 
+
+
+/* COUNTER JS  */
+var a = 0;
+$(window).scroll(function() {
+
+  var oTop = $('#counter').offset().top - window.innerHeight;
+  if (a == 0 && $(window).scrollTop() > oTop) {
+    $('.counter-value').each(function() {
+      var $this = $(this),
+        countTo = $this.attr('data-count');
+      $({
+        countNum: $this.text()
+      }).animate({
+          countNum: countTo
+        },
+
+        {
+          duration: 2000,
+          easing: 'swing',
+          step: function() {
+            $this.text(Math.floor(this.countNum));
+          },
+          complete: function() {
+            $this.text(this.countNum);
+            //alert('finished');
+          }
+
+        });
+    });
+    a = 1;
+  }
+
+});
+<div id="counter">
+    <div class="counter-value" data-count="300">0</div>
+    <div class="counter-value" data-count="400">100</div>
+    <div class="counter-value" data-count="1500">200</div>
+</div>
 
 
 
