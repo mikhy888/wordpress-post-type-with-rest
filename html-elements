@@ -1,5 +1,9 @@
-/* soimple hamburget menu */
+<link rel="icon" type="image/png" href="<?php the_field("favicon","option"); ?>" /> 
 
+
+
+
+/* soimple hamburget menu */
 <div class="hamburger" id="hamburger-1">
 <span class="line"></span>
 <span class="line"></span>
@@ -41,6 +45,11 @@ $(document).ready(function(){
     $(this).toggleClass("is-active");
   });
 });
+
+
+
+
+
 
 
 
