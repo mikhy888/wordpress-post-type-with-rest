@@ -299,6 +299,8 @@ wp_nav_menu( array(
 
 >>>> wp-inc>>template.php>> last condition
 	
+	
+	
 //adding google map iframe from textarea - acf
 	<div class="map-wrapper">
    <?php 
@@ -312,21 +314,18 @@ wp_nav_menu( array(
 	
 	
 // Calling menu from menu name
-	<?php
-	wp_nav_menu(
-		array(
-			'menu' => 'Header Menu'
-		)
-	);
-	?>
+<?php wp_nav_menu( array( 'menu' => 'Header Menu')); ?>
 
 
 // youtube video id
 $v_link = get_sub_field('video_url');
 $video_id = explode("?v=", $v_link);
 $video_id = $video_id[1];
-	
 
+	
+// adding category list from post type declaration
+$category_detail=get_the_category($post->ID);
+<?php foreach($category_detail as $cd){echo " ".str_replace(' ', '-', strtolower($cd->cat_name));} ?>
 
 
 
