@@ -263,6 +263,7 @@ wp_nav_menu( array(
 // list all category and subcategory
 <?php
    $args = array(
+	       'post_type' => 'courses',
                'taxonomy' => 'category', /*taxonomy name specified in post declaration*/
                'orderby' => 'name',
                'order'   => 'ASC'
