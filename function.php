@@ -316,6 +316,18 @@ wp_nav_menu( array(
 // Calling menu from menu name
 <?php wp_nav_menu( array( 'menu' => 'Header Menu')); ?>
 
+	
+// custom menu set up
+<?php $items = wp_get_nav_menu_items( "Menu 1", $args ); ?> 
+<?php
+echo '<ul>';
+foreach($items as $item)
+{
+    echo '<li>'.$item->title.'</li>'; // $item->url  -   to get menu url
+}
+echo '</ul>';
+?>
+
 
 // youtube video id
 $v_link = get_sub_field('video_url');
