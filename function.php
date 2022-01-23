@@ -335,7 +335,7 @@ $video_id = explode("?v=", $v_link);
 $video_id = $video_id[1];
 
 	
-// adding category list from post type declaration
+// adding category list from post type declaration -  this code goes inside post content fetch loop
 $category_detail=get_the_category($post->ID);
 <?php foreach($category_detail as $cd){echo " ".str_replace(' ', '-', strtolower($cd->cat_name));} ?>
 
