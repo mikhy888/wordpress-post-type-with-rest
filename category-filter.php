@@ -3,7 +3,7 @@ js>>>>>>>>>>>>>>>>>>>>>>>>>>
 function catFilter(val) {
 	
          // adding rest api path
-	const api_url = "http://localhost/[sitename]/wp-json/wp/v2/[posttype_name]/?categories="+val+"&_embed";
+	const api_url = "http://localhost/[sitename]/wp-json/wp/v2/[posttype_name]/?categories="+val+"&_embed&per_page=100";
 	
 	// function to get the data from api
 	async function getapi(url) {
