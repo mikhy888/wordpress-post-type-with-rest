@@ -278,6 +278,14 @@ wp_nav_menu( array(
    }
 ?>
 
+// Get category names based on ID - from post type
+<?php 
+	$category_detail=get_the_category($id);
+		foreach($category_detail as $cd){
+		echo $cd->cat_name;
+	}
+?>
+
 
 
 
