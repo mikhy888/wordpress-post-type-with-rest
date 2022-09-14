@@ -242,24 +242,6 @@ add_action( 'init', 'mindbase_create_acf_pages' );
 
 
 
-
-// Custom menu registration
-function wpb_custom_new_menu() {
-  register_nav_menu('my-custom-menu',__( 'My Custom Menu' ));
-}
-add_action( 'init', 'wpb_custom_new_menu' );
-
-
-
-
-// custom menu display
-<?php
-wp_nav_menu( array( 
-    'theme_location' => 'my-custom-menu', 
-    'container_class' => 'custom-menu-class' ) ); 
-?>
-
-
 // list all category and subcategory
 <?php
    $args = array(
@@ -348,7 +330,52 @@ $category_detail=get_the_category($post->ID);
 <?php foreach($category_detail as $cd){echo " ".str_replace(' ', '-', strtolower($cd->cat_name));} ?>
 
 
-
+// custom menu with submenu
+	<?php 
+	function wp_get_menu_array($current_menu) {
+    $array_menu = wp_get_nav_menu_items($current_menu);
+    $menu = array();
+    foreach ($array_menu as $m) {
+        if (empty($m->menu_item_parent)) {
+            $menu[$m->ID] = array();
+            $menu[$m->ID]['ID']          =   $m->ID;
+            $menu[$m->ID]['title']       =   $m->title;
+            $menu[$m->ID]['url']         =   $m->url;
+            $menu[$m->ID]['children']    =   array();
+        }
+    }
+    $submenu = array();
+    foreach ($array_menu as $m) {
+        if ($m->menu_item_parent) {
+            $submenu[$m->ID] = array();
+            $submenu[$m->ID]['ID']       =   $m->ID;
+            $submenu[$m->ID]['title']    =   $m->title;
+            $submenu[$m->ID]['url']      =   $m->url;
+            $menu[$m->menu_item_parent]['children'][$m->ID] = $submenu[$m->ID];
+        }
+    }
+    return $menu;
+}
+	$menu_items = wp_get_menu_array('Main Menu');  // get menu name created here
+ ?>
+   <nav>
+      <ul>
+        <?php foreach ($menu_items as $item) : ?>
+          <li>
+            <a href="<?= $item['url'] ?>" title="<?= $item['title'] ?>"><?= $item['title'] ?></a>
+            <?php if( !empty($item['children']) ):?>
+            <ul class="sub-menu">
+              <?php foreach($item['children'] as $child): ?>
+                <li class="b-main-header__sub-menu__nav-item">
+                  <a href="<?= $child['url'] ?>" title="<?= $child['title'] ?>"><?= $child['title'] ?></a>
+                </li>
+              <?php endforeach; ?>
+            </ul>
+            <?php endif; ?>
+          </li>
+        <?php endforeach; ?>
+     <ul>
+</nav>
 
 
 
