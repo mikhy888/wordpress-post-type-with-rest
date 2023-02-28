@@ -303,9 +303,13 @@ add_action( 'init', 'mindbase_create_acf_pages' );
 	
 	
 	
+	
+	
 // Calling menu from menu name
 <?php wp_nav_menu( array( 'menu' => 'Header Menu')); ?>
 
+	
+	
 	
 // custom menu set up
 <?php $items = wp_get_nav_menu_items( "Menu 1", $args ); ?> 
@@ -318,17 +322,40 @@ foreach($items as $item)
 echo '</ul>';
 ?>
 
+	
+	
 
 // youtube video id
 $v_link = get_sub_field('video_url');
 $video_id = explode("?v=", $v_link);
 $video_id = $video_id[1];
 
+
+	
+//listing the available category of a post type
+  <?php
+    $args = array(
+		'post_type' => 'works', /*Post type name*/
+		'taxonomy' => 'category', /*taxonomy name*/
+		'orderby' => 'name',
+		'order' => 'ASC'
+	    );
+    $cats = get_categories($args);
+      foreach($cats as $cat) {
+    ?>
+    <a href="<?php echo get_category_link( $cat->term_id ) ?>">
+	<?php echo $cat->name; ?>
+    </a>
+  <?php
+    }
+  ?>
+	
 	
 // adding category list from post type declaration -  this code goes inside post content fetch loop
 $category_detail=get_the_category($post->ID);
 <?php foreach($category_detail as $cd){echo " ".str_replace(' ', '-', strtolower($cd->cat_name));} ?>
 
+	
 
 // custom menu with submenu
 	<?php 
