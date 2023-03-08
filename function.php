@@ -404,6 +404,40 @@ $category_detail=get_the_category($post->ID);
      <ul>
 </nav>
 
+	      
+	    
+	     
+// Custom taxonomy registration
+/*custom taxonomy*/
+function add_custom_taxonomies() {
+  register_taxonomy('brand', 'products', array(  //Taxonomy name "brands"
+    'hierarchical' => true,
+    'labels' => array(
+      'name' => _x( 'Brands', 'taxonomy general name' ),
+      'singular_name' => _x( 'Brand', 'taxonomy singular name' ),
+      'search_items' =>  __( 'Search Brands' ),
+      'all_items' => __( 'All Brands' ),
+      'parent_item' => __( 'Parent Brand' ),
+      'parent_item_colon' => __( 'Parent Brand:' ),
+      'edit_item' => __( 'Edit Brand' ),
+      'update_item' => __( 'Update Brand' ),
+      'add_new_item' => __( 'Add New Brand' ),
+      'new_item_name' => __( 'New Brand Name' ),
+      'menu_name' => __( 'Brands' ),
+    ),
+    'rewrite' => array(
+      'slug' => 'brands', 
+      'with_front' => true, 
+      'hierarchical' => true 
+    ),
+  ));
+}
+add_action( 'init', 'add_custom_taxonomies', 0 );
+
+
+// getting the selected value in post declaration
+$term_obj_list = get_the_terms( $post->ID, 'brand' );
+foreach($term_obj_list as $termitem){echo str_replace(' ', '-', strtolower($termitem->name)).' ';}
 
 
 
