@@ -202,28 +202,8 @@ function remove_row_actions( $actions )
 
 
 
-
-//resistering single category for CPT
-  function tr_create_my_taxonomy() {
-    register_taxonomy(
-        'team-category',
-        'team',
-        array(
-            'label' => __( 'Category' ),
-            'rewrite' => array( 'slug' => 'team-category' ),
-            'hierarchical' => true,
-        )
-    );
-}
-add_action( 'init', 'tr_create_my_taxonomy' );
-
-
-
-
 //load faster with acf
 define('WP_POST_REVISIONS', false );
-
-
 
 
 
@@ -267,6 +247,18 @@ add_action( 'init', 'mindbase_create_acf_pages' );
 		echo $cd->cat_name;
 	}
 ?>
+
+
+<!-- get data from single category id outside of post loop -->
+<?php
+$args = array( 'category' => 3, 'post_type' =>  'projects' ); 
+$postslist = get_posts( $args );    
+foreach ($postslist as $post) :  setup_postdata($post); 
+?>  
+<h2><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2> 
+<?php the_excerpt(); ?>  
+<?php endforeach; ?> 
+	
 
 
 
