@@ -92,7 +92,6 @@ add_action("init","reset_editor");
 			'post_type'			=> 'news'  //post name
 		));
 		if( $posts ): ?>
-			<ul class="home-news">
 			<?php foreach( $posts as $post ): 
 				setup_postdata( $post );
 				?>
@@ -106,7 +105,6 @@ add_action("init","reset_editor");
 					</a>
 				</li>
 			<?php endforeach; ?>
-			</ul>
 			<?php wp_reset_postdata(); ?>
 		<?php endif; ?>
 
