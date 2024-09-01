@@ -315,11 +315,17 @@ echo '</ul>';
 	
 	
 
-// youtube video id
-$v_link = get_sub_field('video_url');
-$video_id = explode("?v=", $v_link);
-$video_id = $video_id[1];
-
+// youtube video id ; checking whether its short or main video
+function extractVideoId($url) {
+	if (preg_match('/youtube\.com\/shorts\/([a-zA-Z0-9_-]+)/', $url, $matches)) {
+	    return $matches[1];
+	}
+	if (preg_match('/youtube\.com\/watch\?v=([a-zA-Z0-9_-]+)/', $url, $matches)) {
+	    return $matches[1];
+	}
+	return null;
+}
+$videoId1 = extractVideoId(get_sub_field('url')); // output come in this function
 
 	
 //listing the available category of a post type
