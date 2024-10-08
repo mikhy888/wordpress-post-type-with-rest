@@ -157,31 +157,41 @@ add_action( 'init', 'codex_custom_init' );
 
 
 
-//registration random posts - in function.php
-function wpb_rand_posts() {  
-$args = array(
-    'post_type' => 'services',
-    'orderby'   => 'rand',
-    'posts_per_page' => 5, 
+//registration random posts - in single post page or template
+<?php
+// Function to get and display random posts
+function display_random_posts($number_of_posts = 4) {
+    $args = array(
+        'post_type' => 'post', // Change to your custom post type if needed
+        'posts_per_page' => $number_of_posts,
+        'orderby' => 'rand', // Order posts randomly
+        'no_found_rows' => true, // Optimize query when pagination is not needed
     );
-$the_query = new WP_Query( $args );
-if ( $the_query->have_posts() ) {
-$string .= '<ul>';
-    while ( $the_query->have_posts() ) {
-        $the_query->the_post();
-        $string .= '<li>hehehe<a href="'. get_permalink() .'"><h2>'.get_the_post_thumbnail().'</h2>text</a></li>';
-       //$string .= '<li><a href="'. get_permalink() .'"><img src='.the_field('service_title').'></a></li>';
-    }
-    $string .= '</ul>';
-    /* Restore original Post Data */
-    wp_reset_postdata();
-} else {
-$string .= 'no posts found';
+
+    $random_posts_query = new WP_Query($args);
+
+    // Check if there are posts
+    if ($random_posts_query->have_posts()) : ?>
+        <div class="random-posts">
+            <h2>Random Posts</h2>
+            <ul>
+                <?php while ($random_posts_query->have_posts()) : $random_posts_query->the_post(); ?>
+                    <li>
+                        <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
+                    </li>
+                <?php endwhile; ?>
+            </ul>
+        </div>
+        <?php wp_reset_postdata(); // Reset the post data after the custom query ?>
+    <?php endif;
 }
-return $string; 
-} 
-add_shortcode('wpb-random-posts-services','wpb_rand_posts');
-add_filter('widget_text', 'do_shortcode'); 
+
+// Call the function wherever you want to display random posts
+display_random_posts(); // You can pass the number of posts you want to display
+?>
+
+
+
 
 
 
